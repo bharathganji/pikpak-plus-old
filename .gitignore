@@ -33,7 +33,6 @@ __pycache__
 temp.*
 
 
-*.json
 down.bash
 
 # self used virtual env
