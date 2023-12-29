@@ -1,6 +1,6 @@
 import { IonCheckbox } from '@ionic/react'
 
-import './checkbox.css'
+import './Checkbox.css'
 
 interface CheckboxProps {
   customData: Array<{

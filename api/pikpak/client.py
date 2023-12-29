@@ -73,9 +73,7 @@ def client_from_password(username, password, credfile='', proxy=None):
 
 # create client from credfile, or by username, password
 # the result config will save to credfile for next time
-def create_client(credfile, username, password, proxy=None):
-    #conf={}
-    # credfile="client.json"
+async def create_client(credfile, username, password, proxy=None):
     try:
         with open(credfile, "r+") as f:
             print("=== read token from client.json ====")
@@ -99,7 +97,7 @@ def create_client(credfile, username, password, proxy=None):
         client.refresh_token=conf['refresh']
         client.access_token=conf['access']
         try:
-            result=client.offline_list()
+            result=await client.offline_list()
             print(result) # 看看access token 是否有效
             return client
         except Exception as e:
@@ -108,13 +106,13 @@ def create_client(credfile, username, password, proxy=None):
     if conf['refresh']: # 有 refresh token
         client.refresh_token=conf['refresh']
         try:
-            client.refresh_access_token()
+            await client.refresh_access_token()
         except Exception as e:
             print("Refresh token error: ", e)
             print(__name__, "-------------------------")
-            client.login()
+            await client.login()
     else:
-        client.login()
+        await client.login()
     conf['access']=client.access_token
     conf['refresh']=client.refresh_token
     # write to config credfile="client.json"
